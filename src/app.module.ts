@@ -14,7 +14,7 @@ import { join } from 'path';
 
     CacheModule.register({ isGlobal: true }),
 
-    MongooseModule.forRoot('mongodb+srv://Abhijeet:abhijeet@cluster0.dh4tila.mongodb.net/sample_mflix'),
+    MongooseModule.forRoot('mongodb+srv://Abhijeet:abhijeet@cluster0.dh4tila.mongodb.net/movie_info_user'),
 
     ConfigModule.forRoot({
       isGlobal: true,

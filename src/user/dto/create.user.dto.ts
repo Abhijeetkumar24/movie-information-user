@@ -1,4 +1,4 @@
-import { IsString, IsEmail, } from 'class-validator';
+import { IsString, IsEmail, IsArray, } from 'class-validator';
 
 export class CreateUserDto {
 
@@ -10,5 +10,11 @@ email: string;
 
 @IsString()
 password: string;
+
+@IsArray()
+role: [string];
+
+@IsString()
+notification: string
 
 }
