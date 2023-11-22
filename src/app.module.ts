@@ -14,8 +14,12 @@ import { join } from 'path';
 
     CacheModule.register({ isGlobal: true }),
 
-    MongooseModule.forRoot('mongodb+srv://Abhijeet:abhijeet@cluster0.dh4tila.mongodb.net/movie_info_user'),
-
+    MongooseModule.forRootAsync({
+      useFactory: () => ({
+        uri: process.env.MONGO_URL
+      }),
+    }),
+    
     ConfigModule.forRoot({
       isGlobal: true,
     }),
