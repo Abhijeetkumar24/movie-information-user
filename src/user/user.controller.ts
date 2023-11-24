@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Inject, OnModuleInit, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Inject, OnModuleInit, Param, Post, Req, Res } from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
 import { UserService } from './user.service';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { SignupVerificationDto } from './dto/signup.verify.dto';
 import { LoginDto } from './dto/login.dto';
 import { responseUtils } from 'src/utils/response.utils';
@@ -111,31 +111,46 @@ export class UserController {
     }
 
 
-    @GrpcMethod('UserService', 'GetSubscriber')
-    async subscribers(payload: SubscriberRequest): Promise<subscriberResponse> {
+    @Post('logout')
+    @ApiOperation({
+        summary: 'User Logout',
+        description: 'Logout the user.',
+    })
+    async userLogout(@Req() req: Request, @Res() res: Response) {
         try {
-            if (payload.request == true) {
-                const usersWithNotificationYes = await this.UserModel.find({ notification: 'yes' }).exec();
-                return { emails: usersWithNotificationYes.map((user) => user.email) };
-            }
+
+            const payload = req.headers.authorization;
+            const observable = this.userService.logout(payload)
+            const response = await lastValueFrom(observable);
+            let finalResponse = responseUtils.successResponse(
+                response['message'],
+                response['message'],
+                response['status']
+            )
+            res.status(finalResponse.code).send(finalResponse);
 
         } catch (error) {
-            throw error;
+            let err = responseUtils.errorResponse(
+                error,
+                ExceptionMessage.LOGOUT_FAIL,
+            );
+            res.status(err.code).send(err);
         }
+
+
+    }
+
+
+    @GrpcMethod('UserService', 'GetSubscriber')
+    async getSubscribers(payload: SubscriberRequest): Promise<subscriberResponse> {
+        return this.userService.getSubscribers(payload);
     }
 
 
     @GrpcMethod('UserService', 'GetNameEmail')
-    async getName(payload: NameEmailRequest): Promise<NameEmailResponse> {
-        try {
-            const user = await this.UserModel.findById(payload.id);
-            return { name: user.name, email: user.email };
-
-        } catch (error) {
-            throw error;
-        }
+    async getNameEmail(payload: NameEmailRequest): Promise<NameEmailResponse> {
+        return this.userService.getNameEmail(payload);
     }
-
 
 
 }

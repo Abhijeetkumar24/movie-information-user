@@ -35,7 +35,7 @@ export enum HttpStatusCode {
     GATEWAY_TIMEOUT = 504,
 }
 export enum HttpStatusMessage {
-   
+
     OK = "OK",
     CREATED = "CREATED",
     ACCEPTED = "ACCEPTED",
@@ -66,12 +66,15 @@ export enum HttpStatusMessage {
     ACCOUNT_INACTIVE = "ACCOUNT_INACTIVE",
     ACCOUNT_LOCKED = "ACCOUNT_LOCKED",
     DEFAULT_MESSAGE = "DEFAULT_MESSAGE",
+    LOGOUT_SUCCESSFULLY = "LOGOUT_SUCCESSFULLY"
 }
 
 
+
+
 export enum ExceptionMessage {
-    
-   
+
+
     NOT_FOUND = "NOT_FOUND",
     EMAIL_ALREADY_EXIST = "EMAIL_ALREADY_EXIST",
     ERROR_IN_REGISTRATION = "Error in signup",
@@ -89,7 +92,7 @@ export enum ExceptionMessage {
     INVALID_OTP = "INVALID_OTP",
     INVALID_PASSWORD = "INVALID_PASSWORD",
     UNAUTHORIZED = "UNAUTHORIZED",
-
+    LOGOUT_FAIL = "LOGOUT_FAIL"
 }
 
 
