@@ -5,8 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { CacheModule } from '@nestjs/cache-manager';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { join } from 'path';
 
 @Module({
   imports: [

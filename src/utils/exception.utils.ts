@@ -24,7 +24,6 @@ export class CustomException extends ExceptionHandler {
         super();
         this.data = {
             message: message,
-            // type: message,
         };
         this.status = status || HttpStatusMessage.BAD_REQUEST;
     }

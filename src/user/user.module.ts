@@ -7,10 +7,14 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ClientsModule } from '@nestjs/microservices';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
   imports: [
+
+    ConfigModule.forRoot({}),
+    
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     
     MailerModule.forRootAsync({
@@ -33,9 +37,10 @@ import { join } from 'path';
         name: 'AUTH_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'localhost:50051',
-          package: 'auth',
-          protoPath: join(__dirname, '../../../proto/auth.proto'),
+          url: process.env.AUTH_GRPC_URL,
+          package: process.env.AUTH_PACKAGE,
+          protoPath: process.env.AUTH_PROTO_PATH,
+
         },
       },
     ]),

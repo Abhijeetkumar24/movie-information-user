@@ -1,18 +1,15 @@
-import { Body, Controller, Get, Inject, OnModuleInit, Param, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
 import { UserService } from './user.service';
 import { Request, Response } from 'express';
 import { SignupVerificationDto } from './dto/signup.verify.dto';
 import { LoginDto } from './dto/login.dto';
 import { responseUtils } from 'src/utils/response.utils';
-import { ExceptionMessage, HttpStatusMessage, SuccessMessage } from 'src/interface/enum';
-import { ClientProxy, ClientProxyFactory, GrpcMethod, Transport } from '@nestjs/microservices';
+import { ExceptionMessage, } from 'src/interface/enum';
+import { GrpcMethod } from '@nestjs/microservices';
 import { NameEmailRequest, NameEmailResponse, SubscriberRequest, subscriberResponse } from 'src/interface/user.interface';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
-import { Model } from 'mongoose';
-import { Observable, lastValueFrom, scan, take } from 'rxjs';
-import { ApiBearerAuth, ApiBody, ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { lastValueFrom,} from 'rxjs';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('User')
@@ -21,7 +18,6 @@ export class UserController {
 
     constructor(
         private userService: UserService,
-        @InjectModel(User.name) private UserModel: Model<User>,
     ) { }
 
 

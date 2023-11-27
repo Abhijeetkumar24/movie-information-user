@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { join } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -24,11 +23,9 @@ async function bootstrap() {
   const grpcApp = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.GRPC,
     options: {
-      url: 'localhost:50053' ,
-      package: ['user'],
-      protoPath:  [
-        join(__dirname, '../../proto/user.proto'),
-      ],
+      url: process.env.GRPC_URL ,
+      package: process.env.USER_PACKAGE,
+      protoPath:  process.env.USER_PROTO_PATH,
     },
   });
 
