@@ -18,9 +18,8 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT);
-
-  const grpcApp = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
+  
+  const microservice = app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
       url: process.env.GRPC_URL ,
@@ -28,8 +27,9 @@ async function bootstrap() {
       protoPath:  process.env.USER_PROTO_PATH,
     },
   });
-
-  await grpcApp.listen();
+  
+  await app.startAllMicroservices();
+  await app.listen(process.env.PORT);
 
 }
 bootstrap();

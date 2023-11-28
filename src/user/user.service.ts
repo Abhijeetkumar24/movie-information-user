@@ -30,6 +30,12 @@ export class UserService implements OnModuleInit {
     }
 
 
+    /**
+    * Handles user signup functionality.
+    *
+    * @param {CreateUserDto} createUserDto - The data for creating a new user.
+    * @returns {Promise<any>} A Promise that resolves with the result of the user signup process.
+    */
     async userSignup(createUserDto: CreateUserDto): Promise<any> {
 
         const { name, email, password, role, notification } = createUserDto
@@ -37,6 +43,13 @@ export class UserService implements OnModuleInit {
 
     }
 
+
+    /**
+    * Handles user signup verification functionality.
+    *
+    * @param {SignupVerificationDto} signupVerificationDto - The data for verifying user signup.
+    * @returns {Promise<any>} A Promise that resolves with the result of the user signup verification process.
+    */
     async userSignupVerification(signupVerificationDto: SignupVerificationDto): Promise<any> {
 
         const { otp } = signupVerificationDto
@@ -45,15 +58,35 @@ export class UserService implements OnModuleInit {
     }
 
 
+    /**
+    * Handles user login functionality.
+    *
+    * @param {string} email - The email address of the user.
+    * @param {string} password - The password for user authentication.
+    * @param {string} deviceId - The unique identifier for the user's device.
+    * @returns {Observable<string>} An Observable that emits the authentication token.
+    */
     userLogin(email: string, password: string, deviceId: string): Observable<string> {
         return this.authService.getToken({ email, password, deviceId })
     }
 
+    /**
+    * Handles user logout functionality.
+    *
+    * @param {string} token - The authentication token associated with the user session.
+    * @returns {Observable<string>} An Observable that emits the result of the user logout process.
+    */
     logout(token: string): Observable<string>{
         return this.authService.logout({ token })
     }
 
 
+    /**
+    * Retrieves subscribers based on the provided payload.
+    *
+    * @param {SubscriberRequest} payload - The request payload for retrieving subscribers.
+    * @returns {Promise<subscriberResponse>} A Promise that resolves with the response containing subscriber emails.
+    */
     async getSubscribers(payload: SubscriberRequest): Promise<subscriberResponse> {
         try {
             if (payload.request) {
@@ -66,6 +99,12 @@ export class UserService implements OnModuleInit {
     }
 
 
+    /**
+    * Retrieves user name and email based on the provided user ID.
+    *
+    * @param {NameEmailRequest} payload - The request payload containing the user ID.
+    * @returns {Promise<NameEmailResponse>} A Promise that resolves with the response containing user name and email.
+    */
     public async getNameEmail(payload: NameEmailRequest): Promise<NameEmailResponse> {
         try {
             const user = await this.UserModel.findById(payload.id);

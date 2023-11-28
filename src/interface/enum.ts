@@ -1,6 +1,7 @@
 export enum MSG {
     VERIFICATION_OTP = "Otp Verification",
-    USER_REGISTER = "Your account registration otp: "
+    USER_REGISTER = "Your account registration otp: ",
+    HELLO_WORLD = "Hello world user"
 }
 
 
